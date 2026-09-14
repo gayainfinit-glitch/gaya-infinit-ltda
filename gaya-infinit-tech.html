@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gaya Infinit — Soluções Digitais &amp; Inteligência Artificial</title>
+  <meta name="description" content="Gaya Infinit — automação inteligente, desenvolvimento de software e soluções em IA para empresas que querem escalar.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #06060a;
+      --surface: #0c0c12;
+      --surface-2: #121219;
+      --surface-3: #18181f;
+      --border: rgba(255,255,255,0.05);
+      --border-h: rgba(255,255,255,0.1);
+      --text: #9d9bab;
+      --dim: #5c5a6e;
+      --white: #ededf4;
+      --accent: #6366f1;
+      --accent-l: #818cf8;
+      --green: #22c55e;
+      --cyan: #06b6d4;
+      --glow: rgba(99, 102, 241, 0.1);
+      --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 60px;
+      padding: 0 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(6,6,10,0.75);
+      backdrop-filter: blur(20px) saturate(1.5);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .n-brand {
+      display: flex; align-items: center; gap: 0.55rem;
+    }
+
+    .n-icon {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, var(--accent), #4f46e5);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .n-icon svg { width: 15px; height: 15px; }
+
+    .n-name {
+      font-weight: 700; font-size: 0.95rem; color: var(--white);
+      letter-spacing: -0.02em;
+    }
+
+    .n-links { display: flex; gap: 2rem; align-items: center; }
+
+    .n-links a {
+      font-size: 0.8rem; font-weight: 500; color: var(--dim);
+      transition: color 0.2s;
+    }
+
+    .n-links a:hover { color: var(--white); }
+
+    .n-btn {
+      padding: 0.45rem 1.15rem !important;
+      background: var(--accent) !important;
+      color: #fff !important;
+      border-radius: 7px !important;
+      font-weight: 600 !important;
+      font-size: 0.78rem !important;
+      transition: box-shadow 0.2s !important;
+    }
+
+    .n-btn:hover { box-shadow: 0 0 24px rgba(99,102,241,0.35) !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 500px;
+      background: radial-gradient(ellipse, rgba(99,102,241,0.06), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+
+    .h-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.3rem 0.9rem 0.3rem 0.55rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border-h);
+      border-radius: 100px;
+      font-size: 0.72rem; font-weight: 500; color: var(--text);
+      margin-bottom: 2.5rem;
+    }
+
+    .h-tag-dot {
+      width: 6px; height: 6px; background: var(--green); border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      font-weight: 800; color: var(--white);
+      line-height: 1.08; letter-spacing: -0.035em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .grad {
+      background: linear-gradient(90deg, var(--accent-l), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .hero-p {
+      font-size: 1.05rem; color: var(--dim); max-width: 520px;
+      margin: 0 auto 2.5rem; line-height: 1.8;
+    }
+
+    .hero-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.8rem 1.8rem; border-radius: 9px;
+      font-size: 0.88rem; font-weight: 600; transition: all 0.25s; border: none; cursor: pointer;
+    }
+
+    .btn-p { background: var(--accent); color: #fff; }
+    .btn-p:hover { box-shadow: 0 0 36px rgba(99,102,241,0.3); transform: translateY(-1px); }
+    .btn-s { background: var(--surface-2); color: var(--text); border: 1px solid var(--border-h); }
+    .btn-s:hover { border-color: var(--accent); color: var(--white); }
+
+    /* ─── CODE STRIP ─── */
+    .code-strip {
+      margin: -1rem auto 0;
+      max-width: 540px;
+      background: var(--surface);
+      border: 1px solid var(--border-h);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--dim);
+      line-height: 1.9;
+      position: relative; z-index: 1;
+    }
+
+    .code-strip .kw { color: var(--accent-l); }
+    .code-strip .fn { color: var(--cyan); }
+    .code-strip .str { color: #f59e0b; }
+    .code-strip .cm { color: #3b3a4a; }
+
+    /* ─── METRICS ─── */
+    .metrics {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+
+    .met {
+      padding: 3rem 2rem; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .met:last-child { border-right: none; }
+
+    .met-val {
+      font-size: 2.4rem; font-weight: 800; color: var(--white);
+      letter-spacing: -0.03em; line-height: 1;
+    }
+
+    .met-lab { font-size: 0.76rem; color: var(--dim); margin-top: 0.5rem; }
+
+    /* ─── SECTION ─── */
+    .sec {
+      padding: 7rem 2rem; max-width: 1080px; margin: 0 auto;
+    }
+
+    .sec-head { max-width: 540px; margin-bottom: 4rem; }
+
+    .sec-tag {
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+      color: var(--accent-l); letter-spacing: 0.06em;
+      margin-bottom: 1rem;
+    }
+
+    .sec-head h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800; color: var(--white);
+      line-height: 1.12; letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .sec-head p { font-size: 0.95rem; color: var(--dim); line-height: 1.8; }
+
+    /* ─── SERVICES ─── */
+    .svc-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+    }
+
+    .svc {
+      background: var(--surface); padding: 2.5rem 2rem;
+      transition: background 0.3s;
+    }
+
+    .svc:hover { background: var(--surface-2); }
+
+    .svc-ic {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: var(--glow); border: 1px solid rgba(99,102,241,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 1.25rem;
+    }
+
+    .svc h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .svc p { font-size: 0.85rem; color: var(--dim); line-height: 1.75; }
+
+    /* ─── STACK ─── */
+    .stack-row {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      margin-top: 3rem;
+    }
+
+    .stack-pill {
+      padding: 0.4rem 1rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.75rem; font-weight: 500; color: var(--text);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+
+    .stack-pill .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+    }
+
+    /* ─── PROCESS ─── */
+    .proc-list { display: flex; flex-direction: column; gap: 0; }
+
+    .proc {
+      display: grid; grid-template-columns: 80px 1fr;
+      gap: 2rem; padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .proc:last-child { border-bottom: none; }
+
+    .proc-n {
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+      color: var(--accent-l); padding-top: 0.2rem;
+    }
+
+    .proc h3 { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+    .proc p { font-size: 0.88rem; color: var(--dim); line-height: 1.75; max-width: 520px; }
+
+    /* ─── CLIENTS ─── */
+    .clients-grid {
+      display: grid; grid-template-columns: repeat(2,1fr); gap: 1.25rem;
+    }
+
+    .cl-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+    }
+
+    .cl-quote {
+      font-size: 0.9rem; color: var(--text); line-height: 1.8;
+      margin-bottom: 1.25rem; font-style: italic;
+    }
+
+    .cl-name { font-size: 0.82rem; font-weight: 700; color: var(--white); }
+    .cl-role { font-size: 0.72rem; color: var(--dim); }
+
+    /* ─── FAQ ─── */
+    .faq-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    details.fq {
+      border: 1px solid var(--border); border-radius: 10px;
+      background: var(--surface); transition: border-color 0.3s;
+    }
+
+    details.fq:hover, details.fq[open] { border-color: var(--border-h); }
+
+    details.fq summary {
+      padding: 1.1rem 1.4rem; cursor: pointer;
+      font-weight: 600; font-size: 0.9rem; color: var(--white);
+      list-style: none; display: flex; justify-content: space-between; align-items: center;
+    }
+
+    details.fq summary::-webkit-details-marker { display: none; }
+
+    details.fq summary::after {
+      content: '+'; font-size: 1.1rem; color: var(--accent-l);
+      font-weight: 400; transition: transform 0.2s;
+    }
+
+    details.fq[open] summary::after { transform: rotate(45deg); }
+
+    .fq-body {
+      padding: 0 1.4rem 1.2rem;
+      font-size: 0.85rem; color: var(--dim); line-height: 1.8;
+    }
+
+    /* ─── CTA ─── */
+    .cta {
+      max-width: 1080px; margin: 0 auto 5rem;
+      padding: 5rem 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border-h);
+      border-radius: 18px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+
+    .cta::before {
+      content: ''; position: absolute; top: -50%; left: 50%;
+      transform: translateX(-50%);
+      width: 500px; height: 400px;
+      background: radial-gradient(ellipse, rgba(99,102,241,0.06), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800;
+      color: var(--white); letter-spacing: -0.02em;
+      margin-bottom: 0.75rem; position: relative;
+    }
+
+    .cta p {
+      color: var(--dim); max-width: 420px; margin: 0 auto 2.5rem;
+      font-size: 0.92rem; line-height: 1.75; position: relative;
+    }
+
+    .cta .btn { position: relative; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      max-width: 1080px; margin: 0 auto;
+    }
+
+    .ft-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 2.5rem; padding-bottom: 2.5rem;
+    }
+
+    .ft-brand p {
+      font-size: 0.76rem; color: var(--dim);
+      margin-top: 0.75rem; line-height: 1.8;
+    }
+
+    .ft-cols { display: flex; gap: 3rem; }
+
+    .ft-col h4 {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--dim);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      font-weight: 500; margin-bottom: 0.8rem;
+    }
+
+    .ft-col a {
+      display: block; font-size: 0.8rem; color: var(--text);
+      margin-bottom: 0.45rem; transition: color 0.2s;
+    }
+
+    .ft-col a:hover { color: var(--white); }
+
+    .ft-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    .ft-bottom p { font-size: 0.7rem; color: var(--dim); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+      .n-links { display: none; }
+      .hero { padding: 7rem 1.25rem 4rem; }
+      .sec { padding: 5rem 1.25rem; }
+      .metrics { grid-template-columns: repeat(2,1fr); }
+      .met { border-bottom: 1px solid var(--border); }
+      .svc-grid { grid-template-columns: 1fr; }
+      .proc { grid-template-columns: 60px 1fr; gap: 1rem; }
+      .clients-grid { grid-template-columns: 1fr; }
+      .cta { padding: 3.5rem 1.5rem; margin: 0 1rem 4rem; }
+      .ft-top { flex-direction: column; }
+      .ft-cols { flex-direction: column; gap: 1.5rem; }
+      .code-strip { margin: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="n-brand">
+      <div class="n-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="n-name">Gaya Infinit</span>
+    </a>
+    <div class="n-links">
+      <a href="#solucoes">Soluções</a>
+      <a href="#processo">Processo</a>
+      <a href="#clientes">Clientes</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contato" class="n-btn">Falar com a equipe</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="h-tag">
+        <span class="h-tag-dot"></span>
+        Sistemas em produção — 99.8% uptime
+      </div>
+      <h1>Automação e <span class="grad">inteligência artificial</span> para escalar o seu negócio</h1>
+      <p class="hero-p">Desenvolvemos sistemas inteligentes, chatbots com IA, automações de atendimento e produtos digitais que funcionam 24 horas sem intervenção humana.</p>
+      <div class="hero-btns">
+        <a href="#contato" class="btn btn-p">Solicitar orçamento</a>
+        <a href="#solucoes" class="btn btn-s">Ver soluções</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="code-strip">
+    <span class="cm">// Deploy de agente de atendimento</span><br>
+    <span class="kw">const</span> agent = <span class="kw">await</span> <span class="fn">gaya.deploy</span>({<br>
+    &nbsp;&nbsp;model: <span class="str">"gaya-agent-v3"</span>,<br>
+    &nbsp;&nbsp;channels: [<span class="str">"whatsapp"</span>, <span class="str">"web"</span>],<br>
+    &nbsp;&nbsp;language: <span class="str">"pt-BR"</span>,<br>
+    &nbsp;&nbsp;uptime: <span class="str">"24/7"</span><br>
+    });
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics">
+    <div class="met">
+      <div class="met-val">150+</div>
+      <div class="met-lab">Projetos entregues</div>
+    </div>
+    <div class="met">
+      <div class="met-val">2M+</div>
+      <div class="met-lab">Mensagens processadas/mês</div>
+    </div>
+    <div class="met">
+      <div class="met-val">99.8%</div>
+      <div class="met-lab">Uptime em produção</div>
+    </div>
+    <div class="met">
+      <div class="met-val">24/7</div>
+      <div class="met-lab">Suporte técnico</div>
+    </div>
+  </div>
+
+  <!-- SOLUTIONS -->
+  <div class="sec" id="solucoes">
+    <div class="sec-head">
+      <div class="sec-tag">// soluções</div>
+      <h2>Tecnologia sob medida para cada operação</h2>
+      <p>Da ideia ao deploy em produção. Construímos toda a infraestrutura digital que o seu negócio precisa para operar de forma autônoma.</p>
+    </div>
+
+    <div class="svc-grid">
+      <div class="svc">
+        <div class="svc-ic">🤖</div>
+        <h3>Chatbots com IA</h3>
+        <p>Agentes inteligentes para WhatsApp e web que atendem, vendem e qualificam leads sem intervenção humana.</p>
+      </div>
+      <div class="svc">
+        <div class="svc-ic">⚙️</div>
+        <h3>Automação de Processos</h3>
+        <p>Workflows automatizados que conectam sistemas, eliminam tarefas manuais e reduzem erros operacionais.</p>
+      </div>
+      <div class="svc">
+        <div class="svc-ic">🛠️</div>
+        <h3>Desenvolvimento de Software</h3>
+        <p>APIs, painéis administrativos e sistemas sob medida em Python, Node.js e React — do MVP à escala.</p>
+      </div>
+      <div class="svc">
+        <div class="svc-ic">📊</div>
+        <h3>Dashboards & Analytics</h3>
+        <p>Painéis de controle em tempo real que centralizam métricas de operação, vendas e atendimento.</p>
+      </div>
+      <div class="svc">
+        <div class="svc-ic">🔗</div>
+        <h3>Integrações</h3>
+        <p>Conexão entre Meta API, gateways de pagamento, CRMs, bancos de dados e qualquer serviço externo.</p>
+      </div>
+      <div class="svc">
+        <div class="svc-ic">🏗️</div>
+        <h3>Infraestrutura & DevOps</h3>
+        <p>Setup de servidores, deploy automatizado, monitoramento, backups e segurança para operações críticas.</p>
+      </div>
+    </div>
+
+    <div class="stack-row">
+      <div class="stack-pill"><span class="dot" style="background:#3178c6"></span> Python</div>
+      <div class="stack-pill"><span class="dot" style="background:#f0db4f"></span> Node.js</div>
+      <div class="stack-pill"><span class="dot" style="background:#61dafb"></span> React</div>
+      <div class="stack-pill"><span class="dot" style="background:#009688"></span> FastAPI</div>
+      <div class="stack-pill"><span class="dot" style="background:#336791"></span> PostgreSQL</div>
+      <div class="stack-pill"><span class="dot" style="background:#d63aff"></span> n8n</div>
+      <div class="stack-pill"><span class="dot" style="background:#25d366"></span> WhatsApp API</div>
+      <div class="stack-pill"><span class="dot" style="background:#ff6c37"></span> Meta API</div>
+      <div class="stack-pill"><span class="dot" style="background:#6366f1"></span> Claude / OpenAI</div>
+      <div class="stack-pill"><span class="dot" style="background:#0db7ed"></span> Docker</div>
+      <div class="stack-pill"><span class="dot" style="background:#e34f26"></span> Redis</div>
+      <div class="stack-pill"><span class="dot" style="background:#635bff"></span> Stripe</div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="sec" id="processo">
+    <div class="sec-head">
+      <div class="sec-tag">// processo</div>
+      <h2>Do briefing ao deploy em produção</h2>
+      <p>Metodologia enxuta, comunicação direta e entregas incrementais. Sem burocracia, sem surpresas.</p>
+    </div>
+
+    <div class="proc-list">
+      <div class="proc">
+        <div class="proc-n">01 _</div>
+        <div>
+          <h3>Discovery & Briefing</h3>
+          <p>Entendemos sua operação, mapeamos os gargalos e definimos o escopo técnico. Você recebe um diagnóstico claro antes de qualquer linha de código.</p>
+        </div>
+      </div>
+      <div class="proc">
+        <div class="proc-n">02 _</div>
+        <div>
+          <h3>Arquitetura & Protótipo</h3>
+          <p>Desenhamos a arquitetura do sistema, escolhemos a stack ideal e entregamos um protótipo funcional para validação rápida.</p>
+        </div>
+      </div>
+      <div class="proc">
+        <div class="proc-n">03 _</div>
+        <div>
+          <h3>Desenvolvimento</h3>
+          <p>Sprints semanais com entrega contínua. Você acompanha cada etapa e testa em ambiente de staging antes da produção.</p>
+        </div>
+      </div>
+      <div class="proc">
+        <div class="proc-n">04 _</div>
+        <div>
+          <h3>Deploy & Suporte</h3>
+          <p>Sistema em produção com monitoramento 24/7, documentação técnica e suporte contínuo. Nada de entregar e sumir.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIENTS -->
+  <div class="sec" id="clientes">
+    <div class="sec-head">
+      <div class="sec-tag">// clientes</div>
+      <h2>Quem confia na Gaya Infinit</h2>
+      <p>Empresas de diferentes segmentos que escalaram suas operações com nossas soluções.</p>
+    </div>
+
+    <div class="clients-grid">
+      <div class="cl-card">
+        <p class="cl-quote">"A automação de atendimento que a Gaya entregou reduziu nosso tempo de resposta de 4 horas para menos de 30 segundos. O ROI se pagou no primeiro mês."</p>
+        <div class="cl-name">Ricardo T.</div>
+        <div class="cl-role">CEO — E-commerce de moda, SP</div>
+      </div>
+      <div class="cl-card">
+        <p class="cl-quote">"Precisávamos de um chatbot que não parecesse um robô. A equipe da Gaya entregou um agente que nossos clientes elogiam. Impressionante."</p>
+        <div class="cl-name">Mariana L.</div>
+        <div class="cl-role">Diretora de Marketing — Clínica estética, RJ</div>
+      </div>
+      <div class="cl-card">
+        <p class="cl-quote">"Do briefing ao deploy foram 3 semanas. O painel de controle que recebemos centraliza tudo que precisamos em um só lugar."</p>
+        <div class="cl-name">André F.</div>
+        <div class="cl-role">CTO — Fintech, BH</div>
+      </div>
+      <div class="cl-card">
+        <p class="cl-quote">"A infraestrutura que montaram é sólida. Mais de 6 meses sem downtime. Suporte rápido quando precisamos. Recomendo sem ressalvas."</p>
+        <div class="cl-name">Paula M.</div>
+        <div class="cl-role">Head de Ops — SaaS de educação, GO</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="sec" id="faq">
+    <div class="sec-head">
+      <div class="sec-tag">// faq</div>
+      <h2>Perguntas frequentes</h2>
+    </div>
+
+    <div class="faq-list">
+      <details class="fq">
+        <summary>Quanto custa um projeto?</summary>
+        <div class="fq-body">Depende do escopo. Projetos simples de automação começam a partir de R$ 2.000. Sistemas mais complexos com IA, integrações e painel personalizado são orçados sob medida após o briefing técnico.</div>
+      </details>
+      <details class="fq">
+        <summary>Qual o prazo médio de entrega?</summary>
+        <div class="fq-body">Automações simples de 1 a 2 semanas. Chatbots com IA de 2 a 4 semanas. Sistemas completos com painel e integrações de 4 a 8 semanas. Sempre com entregas incrementais — você não espera o final pra ver resultado.</div>
+      </details>
+      <details class="fq">
+        <summary>Vocês oferecem suporte após a entrega?</summary>
+        <div class="fq-body">Sim. Todo projeto inclui 30 dias de suporte pós-deploy. Oferecemos também planos de manutenção contínua com SLA definido para operações que rodam 24/7.</div>
+      </details>
+      <details class="fq">
+        <summary>Trabalham com quais tecnologias?</summary>
+        <div class="fq-body">Python, FastAPI, Node.js, React, PostgreSQL, Redis, Docker, n8n, WhatsApp Cloud API, Meta Marketing API, Stripe, entre outros. Escolhemos a stack que melhor atende cada projeto.</div>
+      </details>
+      <details class="fq">
+        <summary>Como funciona o pagamento?</summary>
+        <div class="fq-body">Entrada de 50% no início e 50% na entrega. Aceitamos Pix, transferência bancária e cartão de crédito. Para projetos maiores, parcelamos em até 3x conforme o cronograma de sprints.</div>
+      </details>
+      <details class="fq">
+        <summary>Meu projeto fica em servidor próprio?</summary>
+        <div class="fq-body">Você escolhe. Podemos entregar em servidor nosso gerenciado, no seu próprio VPS, ou em cloud (AWS, DigitalOcean, Hetzner). Você sempre tem acesso total ao código-fonte.</div>
+      </details>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta" id="contato">
+    <h2>Vamos construir juntos?</h2>
+    <p>Conte pra gente o que sua operação precisa. Respondemos em até 2 horas no WhatsApp.</p>
+    <a href="https://wa.me/5562982753118" class="btn btn-p">Falar com a equipe técnica</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="n-brand">
+          <div class="n-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="n-name">Gaya Infinit</span>
+        </div>
+        <p>GS Infinity Digital<br>CNPJ 63.963.248/0001-78<br>Goiânia — GO, Brasil<br>gayainfinit@gmail.com</p>
+      </div>
+      <div class="ft-cols">
+        <div class="ft-col">
+          <h4>Soluções</h4>
+          <a href="#solucoes">Chatbots com IA</a>
+          <a href="#solucoes">Automação</a>
+          <a href="#solucoes">Desenvolvimento</a>
+          <a href="#solucoes">Integrações</a>
+        </div>
+        <div class="ft-col">
+          <h4>Empresa</h4>
+          <a href="#processo">Processo</a>
+          <a href="#clientes">Clientes</a>
+          <a href="#faq">FAQ</a>
+          <a href="https://wa.me/5562982753118">Contato</a>
+        </div>
+        <div class="ft-col">
+          <h4>Legal</h4>
+          <a href="#">Termos de serviço</a>
+          <a href="#">Política de privacidade</a>
+          <a href="#">LGPD</a>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p>© 2026 Gaya Infinit — GS Infinity Digital. Todos os direitos reservados.</p>
+      <p>Pagamentos processados em ambiente seguro via Stripe.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
